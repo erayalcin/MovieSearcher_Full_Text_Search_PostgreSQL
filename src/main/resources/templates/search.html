@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" data-th-replace="~{fragments/skeleton::layout (~{::content})}">
+<head>
+    <meta charset="UTF-8">
+    <!-- You MUST include jQuery 3.4+ before Fomantic -->
+    <meta data-th-replace="~{fragments/scripts::js_css}"/>
+    <title>Search</title>
+</head>
+<body>
+
+<div class="ui fluid container" data-th-fragment="content">
+    <div class="ui padded basic segment">
+        <!--        <h1 class="ui dividing header">PostgreSQL Full Text Search (FTS)</h1>-->
+
+        <div class="ui padded segment">
+
+            <h2 class="ui dividing sub header">
+                Movies / Quotes search
+            </h2>
+
+            <div class="ui padded basic segment">
+                <form data-th-action="@{/search}" class="ui form" method="get" id="search_form">
+
+                    <div class="ui fluid action input">
+                        <input type="text" placeholder="Search..." name="q" id="q" data-th-value="${q}"
+                               autofocus="autofocus">
+                        <button class="ui teal icon button">
+                            <i class="search icon"></i>Filter
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+
+
+        <div class="ui segment" data-th-if="${docs}">
+
+            <table class="ui small table" data-th-if="${not #lists.isEmpty(docs)}">
+                <thead>
+                    <tr>
+                        <th>Show ID</th>
+                        <th>Type</th>
+                        <th>Title</th>
+                        <th>Director</th>
+                        <th>Casts</th>
+                        <th>Country</th>
+                        <th>Date Added</th>
+                        <th>Release Year</th>
+                        <th>Rating</th>
+                        <th>Duration</th>
+                        <th>Genres</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                
+                <tbody class="results">
+                    <tr th:each="d : ${docs}">
+                        <td th:text="${d.showId}"></td>
+                        <td th:text="${d.type}"></td>
+                        <td th:text="${d.title}"></td>
+                        <td th:text="${d.director}"></td>
+                        <td th:text="${d.casts}"></td>
+                        <td th:text="${d.country}"></td>
+                        <td th:text="${#dates.format(d.dateAdded, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${d.releaseYear}"></td>
+                        <td th:text="${d.rating}"></td>
+                        <td th:text="${d.duration}"></td>
+                        <td th:text="${d.genres}"></td>
+                        <td th:text="${d.description}"></td>
+                    </tr>
+                </tbody>
+                
+            </table>
+
+           
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>
